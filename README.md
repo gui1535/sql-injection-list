@@ -74,8 +74,6 @@ Aqui estão algumas práticas recomendadas para prevenir ataques de SQL Injectio
 
 * [SQLMap](https://github.com/sqlmapproject/sqlmap) – Automatização de Injeção de SQL e Ferramenta de Extração de Dados de Bancos de Dados
 
-* [BBQSQL](https://github.com/Neohapsis/bbqsql) – Uma Ferramenta para Exploração de Injeção de SQL Baseada em Cegueira
-
 * [NoSQLMap](https://github.com/codingo/NoSQLMap) – Automação de Ataques a Bancos de Dados NoSQL
 
 * [Whitewidow](https://www.kitploit.com/2017/05/whitewidow-sql-vulnerability-scanner.html) – Scanner de Vulnerabilidades de SQL
@@ -83,10 +81,6 @@ Aqui estão algumas práticas recomendadas para prevenir ataques de SQL Injectio
 * [DSSS](https://github.com/stamparm/DSSS) – Scanner para Identificação de Vulnerabilidades de Injeção de SQL
 
 * [explo](https://github.com/dtag-dev-sec/explo) – Formato de Teste de Vulnerabilidade para Web Legível por Humanos e Máquinas
-
-* [Blind-Sql-Bitshifting](https://github.com/awnumar/blind-sql-bitshifting) – Exploração de Injeção de SQL Baseada em Cegueira via Bitshifting
-
-* [Leviathan](https://github.com/leviathan-framework/leviathan) - Conjunto de Ferramentas para Auditoria em Massa Abrangente
 
 * [Blisqy](https://github.com/JohnTroony/Blisqy) – Exploração de Injeção de SQL Baseada em Tempo, Focada em Cabeçalhos HTTP (MySQL/MariaDB)
 
